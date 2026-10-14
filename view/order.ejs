@@ -1,0 +1,54 @@
+<head>
+    <title>Order List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<h1>Order List</h1>
+
+<p>
+    Welcome, <strong><%= user.username %></strong>
+    (<%= user.role %>)
+    |
+    <a href="/logout">Logout</a>
+</p>
+
+<a href="/orders/create">
+    <button>Add New Order</button>
+</a>
+
+<table>
+    <tr>
+        <th>Customer</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Order Date</th>
+        <th>Total Price</th>
+        <th>Action</th>
+    </tr>
+
+    <% orders.forEach(order => { %>
+        <tr>
+            <td><%= order.customerName %></td>
+            <td><%= order.productName %></td>
+            <td><%= order.quantity %></td>
+            <td><%= order.orderDate ? new Date(order.orderDate).toISOString().slice(0, 10) : "N/A" %></td>
+            <td><%= order.totalPrice.toLocaleString("vi-VN") %> VND</td>
+
+            <td>
+                <% if (user.role === "admin") { %>
+                    <a href="/orders/update/<%= order._id %>">
+                        <button>Edit</button>
+                    </a>
+
+                    <form action="/orders/delete/<%= order._id %>"
+                          method="POST"
+                          style="display: inline; box-shadow: none; padding: 0; width: auto;"
+                          onsubmit="return confirm('Delete this order?')">
+                        <button type="submit" class="back-button">Delete</button>
+                    </form>
+                <% } else { %>
+                    View only
+                <% } %>
+            </td>
+        </tr>
+    <% }) %>
+</table>

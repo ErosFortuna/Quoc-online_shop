@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Order</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<h1>Create New Order</h1>
+
+<form action="/orders/create" method="POST">
+
+    <label>Customer Name</label>
+    <input type="text" name="customerName" required>
+
+    <label>Product</label>
+    <select name="productName" required>
+
+        <% products.forEach(product => { %>
+
+            <option value="<%= product.productName %>">
+                <%= product.productName %>
+            </option>
+
+        <% }) %>
+
+    </select>
+
+    <label>Quantity</label>
+    <input type="number" name="quantity" min="1" required>
+
+    <label>Order Date</label>
+    <input type="date" name="orderDate" required>
+
+    <button type="submit" class="full-button">
+        Create Order
+    </button>
+
+    <button type="button"
+            class="full-button back-button"
+            onclick="window.location.href='/orders'">
+        Go Back
+    </button>
+
+</form>
+
+
+<br>
+
+</body>
+</html>
